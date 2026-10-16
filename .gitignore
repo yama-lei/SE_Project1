@@ -1,0 +1,4 @@
+/.env
+/dist/
+/report/request.pdf
+__pycache__/
