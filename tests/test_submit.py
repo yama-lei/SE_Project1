@@ -103,6 +103,31 @@ class SubmitTest(unittest.TestCase):
         for tag in ("lab1-ai-draft", "lab1-final"):
             self.assertIn(self.git("rev-parse", tag), text)
 
+    @unittest.skipUnless(shutil.which("pdftotext"), "需要 pdftotext")
+    def test_report_follows_demo_structure(self):
+        result = self.submit()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        text = subprocess.check_output(
+            ["pdftotext", str(self.repo / "report/request.pdf"), "-"], text=True,
+        )
+        compact = "".join(text.split())
+        headings = (
+            "需求分析报告", "项目名称：", "版本：", "1.背景概述",
+            "2.需求分析", "2.1用户角色与业务模块", "2.2核心流程、数据与状态",
+            "3.非功能性需求", "4.结论", "4.1歧义、冲突与AI审查",
+            "4.2最终需求基线说明", "附：需求整理与会谈内容",
+        )
+        previous = -1
+        for heading in headings:
+            position = compact.find(heading)
+            self.assertGreater(position, previous, heading)
+            previous = position
+        self.assertNotIn("目录", compact)
+        # 模板保持参考 PDF 的两页结构，结论从第二页开始。
+        pages = [page for page in text.split("\f") if page.strip()]
+        self.assertEqual(len(pages), 2)
+        self.assertIn("4.结论", "".join(pages[1].split()))
+
     def test_environment_without_dotenv(self):
         (self.repo / ".env").unlink()
         result = self.submit(**self.report_env)
