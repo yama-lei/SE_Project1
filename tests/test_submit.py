@@ -123,10 +123,11 @@ class SubmitTest(unittest.TestCase):
             self.assertGreater(position, previous, heading)
             previous = position
         self.assertNotIn("目录", compact)
-        # 模板保持参考 PDF 的两页结构，结论从第二页开始。
+        # 不设封面与目录；结论与附录不混入首页。
         pages = [page for page in text.split("\f") if page.strip()]
-        self.assertEqual(len(pages), 2)
-        self.assertIn("4.结论", "".join(pages[1].split()))
+        self.assertGreaterEqual(len(pages), 2)
+        self.assertNotIn("4.结论", "".join(pages[0].split()))
+        self.assertIn("4.结论", compact)
 
     def test_environment_without_dotenv(self):
         (self.repo / ".env").unlink()

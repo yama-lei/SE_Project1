@@ -1,0 +1,22 @@
+@startuml state
+!include style.iuml
+hide empty description
+
+state "草稿" as Draft
+state "已入账" as Posted
+state "已撤回" as Withdrawn
+state "已作废" as Voided #fbf0ee;line:a94a40;text:a94a40
+state "已结算" as Settled #fbf0ee;line:a94a40;text:a94a40
+
+[*] --> Draft : 新增／截图识别
+Draft --> Posted : 提交（创建者）
+Posted --> Withdrawn : 撤回（创建者）
+Withdrawn --> Posted : 修改后重新提交（创建者）
+Posted --> Voided : 作废（管理员／所有者）
+Posted --> Settled : 纳入结算（REQ-014）
+Voided --> [*]
+Settled --> [*]
+
+note left of Draft : 可修改、删除
+note right of Posted : 创建者或管理员可修改，\n状态不变（REQ-007）
+@enduml

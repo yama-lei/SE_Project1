@@ -1,0 +1,69 @@
+@startuml class
+!include style.iuml
+hide methods
+hide empty members
+
+class "用户" as User {
+  用户ID（唯一）
+  用户名（唯一）
+  密码凭据（非明文）
+}
+class "成员关系" as Member {
+  角色：所有者／管理员／普通成员
+  有效状态
+  （用户, 账本）唯一有效
+}
+class "账本" as Book {
+  账本ID（唯一）
+  名称（可重名）
+  恰好一名所有者
+}
+class "邀请码" as Invite {
+  创建者
+  到期时间 = 创建 + 7 天
+}
+class "截图导入批次" as Batch {
+  上传者
+  图片 1～9 张
+  逐条处理结果
+}
+class "收支记录" as Record {
+  记录ID（唯一）
+  金额（分）
+  方向、发生时间、类别
+  状态
+  交易单号（账本内唯一）
+}
+class "预算" as Budget {
+  月份
+  预算金额
+}
+class "结算记录" as Settle {
+  期间（不重叠）
+  参与成员
+  应补／应收结果
+}
+class "储钱目标" as Goal {
+  月份、可花额度
+  “忍住没买”记录
+}
+class "操作记录" as Log {
+  操作者、时间
+  动作、结果、变更摘要
+  只追加
+}
+
+User "1" -- "0..*" Member
+Member "0..*" -- "1" Book
+Book "1" -- "0..*" Invite
+Book "1" -- "0..*" Batch
+Book "1" *-- "0..*" Record
+Book "1" -- "0..1\n每月" Budget
+Book "1" -- "0..*" Settle
+Book "1" -- "0..*" Goal
+Book "1" -- "0..*" Log
+User "1" -- "0..*" Record : 创建 >
+User "1" -- "0..*" Goal
+Batch "0..1" -- "0..*" Record : 生成草稿 >
+Settle "0..1" -- "0..*" Record : 纳入并锁定 >
+@enduml

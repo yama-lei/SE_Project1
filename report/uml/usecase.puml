@@ -1,0 +1,40 @@
+@startuml usecase
+!include style.iuml
+left to right direction
+
+actor "普通成员" as M
+actor "账本管理员" as A
+actor "账本所有者" as O
+
+rectangle "南雍记账" {
+  usecase "记录收支（手动）\nREQ-005／015" as U1
+  usecase "截图导入账目\nREQ-006／016" as U2
+  usecase "修改·撤回本人记录\nREQ-007／025" as U3
+  usecase "多条件查询与统计\nREQ-011／012" as U4
+  usecase "设置储钱目标\nREQ-027" as U5
+  usecase "查看通知与操作记录\nREQ-019／020" as U6
+  usecase "邀请成员加入\nREQ-002" as U7
+  usecase "修改·作废他人记录\nREQ-007／025" as U8
+  usecase "设置月度预算\nREQ-013" as U9
+  usecase "发起账本结算\nREQ-014／017" as U10
+  usecase "任免管理员·转让所有权\nREQ-024" as U11
+}
+
+M -- U1
+M -- U2
+M -- U3
+M -- U4
+M -- U5
+M -- U6
+U7 -- A
+U8 -- A
+U9 -- A
+U10 -- A
+U11 -- O
+O -up-|> A
+U1 -[hidden]-> U7
+U2 -[hidden]-> U8
+U3 -[hidden]-> U9
+U4 -[hidden]-> U10
+U5 -[hidden]-> U11
+@enduml

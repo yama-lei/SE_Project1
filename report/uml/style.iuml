@@ -1,0 +1,40 @@
+' 南大紫配色的公共样式
+!pragma layout smetana
+skinparam defaultFontName "Noto Sans CJK SC"
+skinparam defaultFontSize 12
+skinparam shadowing false
+skinparam backgroundColor transparent
+skinparam ArrowColor #555555
+skinparam ArrowFontColor #444444
+skinparam ArrowFontSize 11
+skinparam ActorBorderColor #630460
+skinparam ActorFontColor #4a0347
+skinparam ActorFontStyle bold
+skinparam UsecaseBackgroundColor #f8f1f7
+skinparam UsecaseBorderColor #b98bb7
+skinparam UsecaseFontColor #2a2a2a
+skinparam RectangleBorderColor #630460
+skinparam RectangleFontColor #630460
+skinparam ClassBackgroundColor #ffffff
+skinparam ClassBorderColor #7a5a78
+skinparam ClassHeaderBackgroundColor #f3e9f2
+skinparam ClassFontColor #4a0347
+skinparam ClassFontStyle bold
+skinparam ClassAttributeFontSize 11
+skinparam StateBackgroundColor #f8f1f7
+skinparam StateBorderColor #630460
+skinparam StateFontColor #4a0347
+skinparam StateFontStyle bold
+skinparam StateStartColor #333333
+skinparam StateEndColor #333333
+skinparam NoteBackgroundColor #fbfbfb
+skinparam NoteBorderColor #999999
+skinparam NoteFontSize 10
+skinparam ActivityBackgroundColor #f8f1f7
+skinparam ActivityBorderColor #630460
+skinparam ActivityDiamondBackgroundColor #fdf6e9
+skinparam ActivityDiamondBorderColor #c8963e
+skinparam ActivityStartColor #333333
+skinparam ActivityEndColor #333333
+skinparam roundCorner 10
+hide circle

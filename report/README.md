@@ -17,7 +17,9 @@ PROJECT_NAME='多人共享记账系统'
 - `.env` 是通过 Bash `source` 加载的可信本机配置，含空格或特殊字符的值须正确加引号；不要加载他人提供的文件，也不要提交真实 `.env`。
 - 也可直接通过进程环境变量提供这些字段；若存在 `.env`，其中赋值优先。
 
-`report/main.typ` 按 `demo/request.pdf` 排版，不设独立封面和目录。正文依次为背景概述、需求分析、非功能性需求、结论，最后附需求整理与会谈内容。保留任务书要求的填写提示，提交前须替换为本人内容，并填写首页的报告版本。
+`report/main.typ` 使用 `report/nju-lab.typ`（南大紫配色、校徽页眉，素材在 `report/assets/`，取自 modern-nju-thesis，MIT）并按 `demo/request.pdf` 排版，不设独立封面和目录。正文依次为背景概述、需求分析、非功能性需求、结论，最后附需求整理与会谈内容。保留任务书要求的填写提示，提交前须替换为本人内容，并填写首页的报告版本。
+
+UML 图源文件为 `report/uml/*.puml`，修改后运行 `bash report/uml/build.sh` 重新生成 SVG（需要 Java 和 PlantUML jar，默认路径 `~/.local/share/plantuml/plantuml.jar`，可用 `PLANTUML_JAR` 覆盖；不需要 Graphviz）。生成的 SVG 随仓库提交，编译报告时不需要 PlantUML。
 
 仅预览模板，无需标签或打包配置：
 
