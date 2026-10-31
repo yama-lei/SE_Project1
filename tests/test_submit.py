@@ -74,11 +74,11 @@ class SubmitTest(unittest.TestCase):
             for name in ("requirements.md", "chat.txt"):
                 expected = subprocess.check_output(["git", "show", f"lab1-final:{name}"], cwd=self.repo)
                 self.assertEqual(archive.read(prefix + name), expected)
-            self.assertEqual(archive.read(prefix + "request.pdf"), (self.repo / "report/request.pdf").read_bytes())
+            self.assertEqual(archive.read(prefix + "request.pdf"), (self.repo / "report/task1/request.pdf").read_bytes())
             self.assertTrue(archive.read(prefix + "request.pdf").startswith(b"%PDF-"))
         if shutil.which("pdftotext"):
             text = subprocess.check_output(
-                ["pdftotext", str(self.repo / "report/request.pdf"), "-"], text=True,
+                ["pdftotext", str(self.repo / "report/task1/request.pdf"), "-"], text=True,
             )
             for value in self.report_env.values():
                 self.assertIn("".join(value.split()), "".join(text.split()))
@@ -98,7 +98,7 @@ class SubmitTest(unittest.TestCase):
         result = self.submit()
         self.assertEqual(result.returncode, 0, result.stderr)
         text = subprocess.check_output(
-            ["pdftotext", str(self.repo / "report/request.pdf"), "-"], text=True,
+            ["pdftotext", str(self.repo / "report/task1/request.pdf"), "-"], text=True,
         )
         for tag in ("lab1-ai-draft", "lab1-final"):
             self.assertIn(self.git("rev-parse", tag), text)
@@ -108,7 +108,7 @@ class SubmitTest(unittest.TestCase):
         result = self.submit()
         self.assertEqual(result.returncode, 0, result.stderr)
         text = subprocess.check_output(
-            ["pdftotext", str(self.repo / "report/request.pdf"), "-"], text=True,
+            ["pdftotext", str(self.repo / "report/task1/request.pdf"), "-"], text=True,
         )
         compact = "".join(text.split())
         headings = (
@@ -136,7 +136,7 @@ class SubmitTest(unittest.TestCase):
         self.assertTrue(self.archive.exists())
         if shutil.which("pdftotext"):
             text = subprocess.check_output(
-                ["pdftotext", str(self.repo / "report/request.pdf"), "-"], text=True,
+                ["pdftotext", str(self.repo / "report/task1/request.pdf"), "-"], text=True,
             )
             for value in self.report_env.values():
                 self.assertIn("".join(value.split()), "".join(text.split()))

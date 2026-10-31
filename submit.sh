@@ -52,13 +52,13 @@ typst compile --root "$root" \
   --input "report-date=${REPORT_DATE:-$(date +%F)}" \
   --input "repo-url=$repo_url" --input "branch=$branch" \
   --input "draft-hash=$draft_hash" --input "final-hash=$final_hash" \
-  report/main.typ "$package/request.pdf"
+  report/task1/main.typ "$package/request.pdf"
 (
   cd -- "$stage"
   zip -q -r "$name.zip" "$name"
 )
 # 每次从干净的临时目录打包，避免 zip 更新模式混入旧文件。
-cp -- "$package/request.pdf" report/request.pdf
+cp -- "$package/request.pdf" report/task1/request.pdf
 mv -f -- "$stage/$name.zip" "dist/$name.zip"
-printf '已生成：\n  %s/report/request.pdf\n  %s/dist/%s.zip\n' "$root" "$root" "$name"
+printf '已生成：\n  %s/report/task1/request.pdf\n  %s/dist/%s.zip\n' "$root" "$root" "$name"
 printf '提交前请人工确认：报告已填完、与最终需求一致，分支及两个标签已推送且仓库可访问。\n'

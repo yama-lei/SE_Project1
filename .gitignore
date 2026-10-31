@@ -1,5 +1,5 @@
 /.env
 /dist/
-/report/request.pdf
+/report/task*/request.pdf
 __pycache__/
 sb_se_project.md

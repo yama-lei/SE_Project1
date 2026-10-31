@@ -1,4 +1,4 @@
-#import "nju-lab.typ": *
+#import "../nju-lab.typ": *
 
 #let student-id = sys.inputs.at("student-id", default: "待填写学号")
 #let student-name = sys.inputs.at("student-name", default: "待填写姓名")
