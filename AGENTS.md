@@ -1,8 +1,4 @@
-# Guidance for agents
-
-## Rules
-- Commit after user permits. Use `{chore,feat,bugs,docs}/slug: content` format. Also add a `ai-` prefix if the content should be annotated as AI-Generated, dont use that if not.
-
-## Meta improve rules
-If you find conflict content or something better can be changed, let user aware of this and edit them after user permits. (etc. you can modify Agents.md to fix Grammer,Language influency improvement and codes for bug fixes)
+- Commit only after the user gives permission.
+- Use `{chore,feat,bugs,docs}/slug: content` for commit messages. Add the `ai-` prefix when the commit should be marked as AI-generated. Otherwise, omit it.
+- If you find conflicting content or opportunities for improvement, notify the user and obtain permission before making changes. Examples include improving grammar and clarity in `AGENTS.md` and fixing bugs in code.
 
