@@ -1,0 +1,35 @@
+@startuml sequence
+!include style.iuml
+autonumber
+
+actor "管理员" as U
+participant "界面" as UI
+participant "结算模块" as S
+participant "权限校验" as P
+participant "记录模块" as R
+participant "数据库" as DB
+participant "操作记录" as A
+participant "通知服务" as N
+
+U -> UI : 选择期间与参与成员，点击结算
+UI -> S : settle(bookId, period, members, requestId)
+S -> P : check(user, book, SETTLE)
+P --> S : 通过
+S -> DB : 开启事务
+S -> DB : 检查请求是否已处理／期间是否重叠
+alt 重复请求或期间重叠
+  S --> UI : 返回已有结果／拒绝
+else 可结算
+  S -> R : 取期间内已入账记录
+  R --> S : 记录列表
+  S -> S : 按成员平均分摊，计算应补／应收
+  S -> R : 将记录置为已结算（带版本号）
+  R -> DB : 更新记录状态
+  S -> DB : 保存结算记录
+  S -> A : 写入操作记录
+  S -> DB : 提交事务
+  A -> N : 变更事件
+  N --> U : 软件内通知相关成员
+  S --> UI : 返回结算结果
+end
+@enduml

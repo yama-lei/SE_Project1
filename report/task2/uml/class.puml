@@ -1,0 +1,70 @@
+@startuml class
+!include style.iuml
+hide empty members
+
+class User {
+  username
+  passwordHash
+}
+class Membership {
+  role : 所有者/管理员/成员
+  active
+}
+class Book {
+  name
+}
+class Invite {
+  code
+  expiresAt
+}
+class Record {
+  amountCents
+  direction : 收入/支出
+  occurredAt
+  category
+  txnNo
+  status : 草稿/已入账/已撤回/已作废/已结算
+  submit()
+  withdraw()
+  void()
+}
+class ImportBatch {
+  images
+  parse()
+}
+class Budget {
+  month
+  amountCents
+}
+class Settlement {
+  period
+  results
+  execute()
+}
+class SavingGoal {
+  month
+  allowanceCents
+}
+class AuditLog {
+  actor
+  action
+  summary
+}
+class Notification {
+  receiver
+  read
+}
+
+User "1" -- "0..*" Membership
+Membership "0..*" -- "1" Book
+Book "1" -- "0..*" Invite
+Book "1" *-- "0..*" Record
+Book "1" -- "0..*" ImportBatch
+Book "1" -- "0..*" Budget
+Book "1" -- "0..*" Settlement
+Book "1" -- "0..*" SavingGoal
+Book "1" -- "0..*" AuditLog
+ImportBatch "0..1" -- "0..*" Record : 生成草稿
+Settlement "0..1" -- "0..*" Record : 锁定
+AuditLog "1" -- "0..*" Notification
+@enduml

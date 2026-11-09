@@ -1,0 +1,37 @@
+@startuml component
+!include style.iuml
+skinparam rectangleBackgroundColor #ffffff
+
+rectangle "表现层" as L1 {
+  component "移动端／Web 界面" as UI
+}
+rectangle "业务模块" as L2 {
+  component "账号" as Auth
+  component "账本与成员" as Book
+  component "收支记录" as Record
+  component "截图导入" as Import
+  component "查询统计" as Query
+  component "预算" as Budget
+  component "结算" as Settle
+  component "储钱目标" as Goal
+}
+rectangle "公共服务" as L3 {
+  component "权限校验" as Perm
+  component "操作记录" as Audit
+  component "通知" as Notify
+}
+rectangle "数据层" as L4 {
+  database "关系数据库" as DB
+}
+cloud "第三方识别服务" as OCR
+
+UI -down-> L2
+L2 -down-> L3 : 每次操作先校验、后留痕
+L3 -down-> L4
+L2 -down-> L4
+Import -right-> OCR
+Import -down-> Record : 生成草稿
+Settle -down-> Record : 锁定记录
+Budget -down-> Query : 已入账支出
+Audit -right-> Notify
+@enduml
