@@ -1,8 +1,8 @@
 {
-  "mcpServers": {
-    "pixso": {
-      "type": "http",
-      "url": "https://pixso.net/mcp"
+    "mcpServers": {
+        "penpot": {
+            "command": "npx",
+            "args": ["-y", "mcp-remote", "http://localhost:4401/mcp", "--allow-http"]
+        }
     }
-  }
 }
