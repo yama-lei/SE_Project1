@@ -1,0 +1,51 @@
+@startuml component-manual
+!include style.iuml
+skinparam rectangleBackgroundColor #ffffff
+
+rectangle "表现层" as L1 {
+  component "移动端／Web 界面" as UI
+}
+rectangle "业务模块（五个功能点）" as L2 {
+  package "账号与账本成员" as G1 {
+    component "账号" as Auth
+    component "账本与成员" as Book
+  }
+  package "记账与记录管理" as G2 {
+    component "收支记录" as Record
+    component "截图导入" as Import
+  }
+  package "查询统计与预算" as G3 {
+    component "查询统计" as Query
+    component "预算" as Budget
+    component "储钱目标" as Goal
+  }
+  package "结算" as G4 {
+    component "结算" as Settle
+  }
+  package "操作记录与通知" as G5 {
+    component "操作记录" as Audit
+    component "通知" as Notify
+  }
+}
+rectangle "公共服务" as L3 {
+  component "权限校验" as Perm
+}
+rectangle "数据层" as L4 {
+  database "关系数据库" as DB
+}
+cloud "第三方识别服务" as OCR
+
+UI -down-> L2
+L2 -down-> L3 : 每次操作先校验
+L3 -down-> L4
+L2 -down-> L4
+Import -up-> OCR
+Import -down-> Record : 生成草稿
+Settle -down-> Record : 锁定记录
+Budget -down-> Query : 已入账支出
+Audit -right-> Notify : 变更事件
+G1 -[hidden]right-> G2
+G2 -[hidden]right-> G3
+G1 -[hidden]down-> G4
+G4 -[hidden]right-> G5
+@enduml

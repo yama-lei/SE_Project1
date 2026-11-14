@@ -4,4 +4,4 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 jar="${PLANTUML_JAR:-$HOME/.local/share/plantuml/plantuml.jar}"
-java -Djava.awt.headless=true -jar "$jar" -tsvg component.puml class.puml state.puml sequence.puml
+java -Djava.awt.headless=true -jar "$jar" -tsvg component.puml component-manual.puml class.puml state.puml sequence.puml
